@@ -45,5 +45,3 @@ def all_seats():
         all_seats[count] = seats
         count += 1
     return all_seats
-
-print(all_seats())
