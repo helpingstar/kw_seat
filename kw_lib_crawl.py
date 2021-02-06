@@ -1,7 +1,7 @@
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 import re
-import pprint
+
 def get_soup(url):
     """
     url에 대한 request를 요청하고 soup객체를 반환한다.
@@ -32,7 +32,7 @@ def all_seats():
     for lib in all_lib:
         # maptemp 아래 소속되어있는 모든 자리 자료를 리스트로 얻는다.
         bs_seats = lib.select('#maptemp > *')
-        seats = {}
+        seats = []
         for seat in bs_seats:
             if seat['id'].startswith('Layer'):
                 id_num = int(re.findall('Layer([0-9]+)', seat['id'])[0])
@@ -41,7 +41,9 @@ def all_seats():
                     is_full = 1
                 else:
                     is_full = 0
-                seats[id_num] = is_full
+                seats.append({id_num: is_full})
         all_seats[count] = seats
         count += 1
     return all_seats
+
+print(all_seats())
